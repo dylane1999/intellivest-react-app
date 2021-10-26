@@ -21,7 +21,7 @@ const App = () => {
   return (
     <>
       <Switch>
-        {authState.token != 'not_null' ? <PrivateRoutes /> : <PublicRoutes />}
+        {authState.token != null ?  <PublicRoutes />: <PrivateRoutes /> }
       </Switch>
     </>
   );

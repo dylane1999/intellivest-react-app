@@ -1,9 +1,14 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import loginUserWithCredentials from '../actions/loginUserWithCredentials';
-import GoBackArrow from '../components/GoBackArrow';
-import TextInput from '../components/TextInput';
-import store from '../store';
+import React, { useState } from "react";
+import styled from "styled-components";
+import loginUserWithCredentials from "../actions/loginUserWithCredentials";
+import GoBackArrow from "../components/GoBackArrow";
+import TextInput from "../components/TextInput";
+import store from "../store";
+import TextField from "@mui/material/TextField";
+import { withStyles } from "@mui/material";
+import TestComponent from "../components/TextInput";
+import "../index.css"
+
 
 const Root = styled.div`
   background-color: #323232;
@@ -11,13 +16,14 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
 `;
 
 const Heading = styled.div`
   color: #ffffff;
-  font-size: 36px;
+  font-size: 2.875rem;
   /* text-decoration: underline; */
   display: flex;
   flex-direction: column;
@@ -27,7 +33,7 @@ const Heading = styled.div`
 `;
 const SubHeading = styled.div`
   color: #ffffff;
-  font-size: 24px;
+  font-size: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,9 +43,22 @@ const Spacing = styled.div`
   padding: 6px;
 `;
 
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 50vh;
+  width: 40vh;
+  background-color: gray;
+  border-radius: 5px;
+  z-index: 0;
+  padding: 16px;
+`;
+
 const Line = styled.div`
   position: absolute;
-  width: 260px;
+  width: 300px;
   height: 1px;
   border: 1px solid #f9f9f9;
 `;
@@ -49,7 +68,6 @@ const TextWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin-right: 60px;
 `;
 
 const LoginButtonWrapper = styled.div`
@@ -58,43 +76,61 @@ const LoginButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background: rgba(85, 89, 175, 0.79);
-  width: 322px;
+  width: 320px;
   height: 69px;
   border-radius: 5px;
-  margin-top: 60%;
+  /* everything below 360px width has this lower button width */
+  @media (max-width: 360px){
+    width: 250px;
+  }
+
 `;
 const ButtonText = styled.div`
   font-size: 16px;
   color: white;
 `;
 
+const StyledTextField = styled(TextField)`
+  color: white;
+
+  background-color: white;
+`;
+
 const LoginPage = () => {
-
   const loginUser = async (userLogin: string, userPassword: string) => {
-    console.log("call login user")
-    const resData = await store.dispatch(loginUserWithCredentials({login: userLogin, password: userPassword}))
-    console.log(resData)
-  }
+    console.log("call login user");
+    const resData = await store.dispatch(
+      loginUserWithCredentials({ login: userLogin, password: userPassword })
+    );
+    console.log(resData);
+  };
 
-  const [emailLogin, changeEmail] = useState('');
-  const [password, changePassword] = useState('');
+  const [emailLogin, changeEmail] = useState("");
+  const [password, changePassword] = useState("");
+
+  const styles = {
+    input: {
+      color: "#FFFFFF",
+    },
+  };
 
   return (
     <Root>
-      <GoBackArrow path={'/'} />
+      <Spacing />
+
       <TextWrapper>
-        <Heading>Lets Log You In</Heading>
+        <Heading>Let's Log You In</Heading>
         <Spacing />
         <Line />
         <SubHeading>Welcome Back!</SubHeading>
       </TextWrapper>
       <Spacing />
-
       <TextInput
         value={emailLogin}
         onChange={changeEmail}
         placeholder="Email Login"
       />
+      
 
       <TextInput
         value={password}
@@ -102,7 +138,7 @@ const LoginPage = () => {
         placeholder="Password"
         secure={true}
       />
-      <LoginButtonWrapper onClick={()=> loginUser(emailLogin, password)}>
+      <LoginButtonWrapper onClick={() => loginUser(emailLogin, password)}>
         <ButtonText>Login</ButtonText>
       </LoginButtonWrapper>
     </Root>

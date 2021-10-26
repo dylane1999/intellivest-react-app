@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface userState {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+  id: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
 }
 
 export interface loginUserAction {
@@ -14,12 +14,12 @@ export interface loginUserAction {
   email: string;
 }
 
-const initialState = {
-  id: "fasdfdaf4332",
+const initialState: userState = {
+  id: null,
   firstName: null,
   lastName: null,
   email: null,
-} as userState;
+}
 
 const userSlice = createSlice({
   name: 'userState',

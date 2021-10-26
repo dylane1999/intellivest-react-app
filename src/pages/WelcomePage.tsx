@@ -1,10 +1,12 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
-import styled from 'styled-components';
-import {RootState} from '../store';
-import IntellivestLogo from '../assets/IntellivestLogo';
-import {Link} from 'react-router-dom';
-import BackArrow from '../assets/BackArrow';
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import { RootState } from "../store";
+import IntellivestLogo from "../assets/IntellivestLogo";
+import { Link } from "react-router-dom";
+import BackArrow from "../assets/BackArrow";
+import MySlider from "../components/MySlider";
+import { Button } from "@mui/material";
 
 const Root = styled.div`
   background-color: #323232;
@@ -12,8 +14,8 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
 `;
 
 const WelcomeContainer = styled.div`
@@ -30,26 +32,23 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 100vw;
 `;
 
-const LoginButton = styled.div`
-  background: rgba(146, 146, 146, 0.5);
-  border-bottom-left-radius: 5px;
-`;
-
-const LogInButtonWrapper = styled.div`
+const LogInButton = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   background-color: rgba(146, 146, 146, 0.5);
-  width: 159px;
-  height: 69px;
+  width: 160px;
+  height: 75px;
+  border: none;
   border-top-left-radius: 5;
   border-bottom-left-radius: 5;
 `;
 
-const SignUpButtonWrapper = styled.div`
+const SignUpButton = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -57,17 +56,24 @@ const SignUpButtonWrapper = styled.div`
   background: rgba(85, 89, 175, 0.79);
   border-top-right-radius: 5;
   border-bottom-right-radius: 5;
-  width: 159px;
-  height: 69px;
+  width: 160px;
+  height: 75px;
+  border: none;
 `;
 
 const StyledLink = styled(Link)`
-z-index: 10;
+  text-decoration: none;
 `;
 
 const ButtonText = styled.div`
   font-size: 16px;
   color: white;
+  text-decoration: none;
+`;
+
+
+const Spacing = styled.div`
+  padding: 6px;
 `;
 
 interface Props {}
@@ -80,13 +86,32 @@ const WelcomePage = (props: Props) => {
       <WelcomeContainer>
         <IntellivestLogo />
         <ButtonContainer>
-          <Link to="/login" component={LogInButtonWrapper}>
-              <ButtonText> Log In</ButtonText>
-          </Link>
-          <Link to="/signup" component={SignUpButtonWrapper}>
-              <ButtonText> Sign Up </ButtonText>
-          </Link>
-        </ButtonContainer> 
+          <StyledLink to="/login">
+          <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#858585",
+                width: "160px",
+                height: "80px",
+              }}
+            >
+              Log In
+            </Button>
+          </StyledLink>
+          <Spacing/>
+          <StyledLink to="/signup">
+          <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#5559af",
+                width: "160px",
+                height: "80px",
+              }}
+            >
+              Sign Up
+            </Button>
+          </StyledLink>
+        </ButtonContainer>
       </WelcomeContainer>
     </Root>
   );

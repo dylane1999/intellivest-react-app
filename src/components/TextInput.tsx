@@ -1,36 +1,35 @@
-import React, {useState, Dispatch, SetStateAction} from 'react';
-import styled from 'styled-components';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { createTheme, ThemeProvider, withStyles } from "@material-ui/core/styles";
+import { textTheme } from "../theme";
 
-interface ITextInputProps {
-  onChange: Dispatch<SetStateAction<string>>;
-  value: string;
-  placeholder: string;
-  secure?: boolean;
-}
 
-// const StyledInput = styled.div`
-//   width: 322px;
-//   height: 56px;
-//   border: 1px solid #f0f0f0;
-//   border-radius: 5px;
-//   color: white;
-//   margin: 20px;
-//   padding-left: 6px;
-// `;
 
-const TextInput = (props: ITextInputProps) => {
-  return (
-    <div>
-      FIXX
-      {/* <StyledInput
-        onChangeText={props.onChange}
-        value={props.value}
-        placeholder={props.placeholder}
-        placeholderTextColor="#CCCCCC"
-        secureTextEntry={props.secure}      
-        /> */}
-    </div>
-  );
+const styles = {
+  input: {
+    color: "#FFFFFF",
+  },
 };
 
-export default TextInput;
+const TextInput = (props: any) => {
+  const {classes} = props
+  return (
+    <ThemeProvider theme={textTheme}>
+    <TextField
+      id="outlined-basic"
+      variant="outlined"
+      required
+      label="Email"
+      color="primary"
+      InputProps={{
+        className: classes.input,
+      }}
+      style={{ width: "200px", margin: "20px" }}
+    />
+    </ThemeProvider>
+  );
+}
+
+export default withStyles(styles)(TextInput);
+
