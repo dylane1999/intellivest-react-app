@@ -6,23 +6,22 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import WelcomePage from './pages/WelcomePage';
-import {Switch} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import store, {RootState} from './store';
+import React from "react";
+import WelcomePage from "./pages/WelcomePage";
+import { Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { store, RootState } from "./store";
 
-import {PrivateRoutes} from './routing/PrivateRoutes';
+import { PrivateRoutes } from "./routing/PrivateRoutes";
 import PublicRoutes from "./routing/PublicRoutes";
 
 const App = () => {
-  const authState = useSelector((state: RootState) => state.auth);
+  const token = useSelector((state: RootState) => state.auth.token);
+  console.log("token", token != null);
 
   return (
     <>
-      <Switch>
-        {authState.token != null ?  <PublicRoutes />: <PrivateRoutes /> }
-      </Switch>
+      <Switch>{token != '' ? <PrivateRoutes /> : <PublicRoutes />}</Switch>
     </>
   );
 };

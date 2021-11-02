@@ -6,6 +6,9 @@ import UserProfilePage from '../pages/UserProfilePage';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import WritePostPage from '../pages/WritePostPage';
+import PortfolioPage from '../pages/PortfolioPage';
+import SearchPage from '../pages/SearchPage';
+import UnfoundPage from '../pages/UnfoundPage';
 
 const Root = styled.div`
   background-color: #323232;
@@ -25,6 +28,10 @@ export const PrivateRoutes = () => {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/profile/:id" component={UserProfilePage}/>
         <Route exact path="/write/post/:id" component={WritePostPage}/>
+        <Route exact path="/portfolio" component={PortfolioPage}/>
+        <Route exact path="/search" component={SearchPage}/>
+        <Route component={UnfoundPage} />
+
       </Switch>
       <BottomNav/>
     </Root>

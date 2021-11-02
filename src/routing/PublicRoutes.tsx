@@ -7,9 +7,9 @@ import WelcomePage from '../pages/WelcomePage';
 const PublicRoutes = () => {
     return (
         <Switch>
-        <Route exact path="/" component={WelcomePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={SignupPage} />
+        <Route path="/" component={WelcomePage} />
       </Switch>
     )
 }

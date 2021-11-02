@@ -6,21 +6,22 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import WelcomePage from './pages/WelcomePage';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import {Provider,} from 'react-redux';
-import store, {RootState} from './store';
-import App from './App';
-
+import React from "react";
+import WelcomePage from "./pages/WelcomePage";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store, persistor, RootState } from "./store";
+import App from "./App";
+import { PersistGate } from "redux-persist/integration/react";
 
 const AppRoot = () => {
-
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 };

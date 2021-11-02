@@ -1,7 +1,8 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import styled from 'styled-components';
-import Avatar from './Avatar';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import getProfilePictureHook from "../hooks/getProfilePictureHook";
+import Avatar from "./Avatar";
 
 /**
  * @interface IPostProps
@@ -26,11 +27,8 @@ const PostRoot = styled.div`
   justify-content: flex-start;
   width: 100%;
   padding: 16px;
-  border-style: solid;
-  border-bottom-color: #a2a2a2;
-  border-bottom-width: 1px;
-  border-top-width: 1px;
-  border-top-color: #a2a2a2;
+  border-top: 1px solid #a2a2a2;
+  border-bottom: 1px solid #a2a2a2;
 `;
 
 const PostAuthorText = styled.div`
@@ -58,22 +56,19 @@ const PostTextWrapper = styled.div`
  * @returns - jsx for post
  */
 const Post = (props: IPostProps) => {
-  const getAvatar = () => {
-    if (props.posterAvatar) {
-      return props.posterAvatar;
-    }
-    return 'https://reactnative.dev/img/tiny_logo.png';
-  };
+
+  const profilePic = getProfilePictureHook(props.posterAvatar)
 
   return (
     <PostRoot>
-      <Avatar imageUrl={getAvatar()} userId={props.posterId} />
+      <Avatar imageUrl={profilePic} userId={props.posterId} />
       <PostTextWrapper>
         <Link
           to={`/profile/${props.posterId}`}
           onClick={() => {
             console.log(`go to user: ${props.posterId} profile`);
-          }}>
+          }}
+        >
           <PostAuthorText>
             {props.posterName} - {props.postTime}
           </PostAuthorText>

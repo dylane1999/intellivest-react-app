@@ -19,13 +19,12 @@ const Avatar = (props: IAvatarProps) => {
   const AvatarImage = styled.img`
     height: ${getImageSize()};
     width: ${getImageSize()};
-    border-radius: 50px;
+    border-radius: 5px;
   `;
-
   return (
     <div>
       <Link to={`/profile/${props.userId}`}>
-        <AvatarImage src={`url(${props.imageUrl})`} />
+        <AvatarImage src={`${props.imageUrl}`} />
       </Link>
     </div>
   );

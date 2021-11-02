@@ -14,40 +14,33 @@ const Root = styled.div`
   width: 100%;
 `;
 
-const HeaderWrapper = styled.div`
+const PostsContainer = styled.div`
   background-color: #323232;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 50%;
+  height: 85vh;
   padding: 16px;
+  overflow-y: scroll;
 `;
 
-// const PostScrollView = styled.ScrollView.attrs({
-//   contentContainerStyle: props => {
-//     return {
-//       alignItems: 'center',
-//       justifyContent: 'center',
-//     };
-//   },
-// })`
-//   width: 100%;
-// `;
+
 
 const HomePage = () => {
 
   return (
     <Root>
-      <div>
+      <PostsContainer>
+        
         <Post
           posterId={'qweoh83ubhdwe2'}
           postContent="content"
           postTime="8h"
-          posterAvatar=""
           posterName="dylan edwards"
         />
-      </div>
+      </PostsContainer>
     </Root>
   );
 };

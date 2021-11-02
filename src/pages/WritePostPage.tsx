@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import styled from 'styled-components';
-import {RootState} from '../store';
-import {setIsWritingPost} from '../reducers/postSlice';
-import PostTextInput from '../components/PostTextInput';
-import {useHistory} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import { RootState } from "../store";
+import { setIsWritingPost } from "../reducers/postSlice";
+import PostTextInput from "../components/PostTextInput";
+import { useHistory } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Root = styled.div`
   background-color: #323232;
@@ -12,7 +13,7 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 `;
 
@@ -63,39 +64,58 @@ const WritePostPage = () => {
   const history = useHistory();
 
   const handleSubmitPost = () => {
-    console.log('submitting the post: ', postContent);
+    console.log("submitting the post: ", postContent);
     dispatch(setIsWritingPost(false));
     history.goBack();
   };
 
   const handleCancelPost = () => {
-    console.log('cancelling the post');
+    console.log("cancelling the post");
     dispatch(setIsWritingPost(false));
     history.goBack();
   };
 
-  const [postContent, setPostContent] = useState('');
+  const [postContent, setPostContent] = useState("");
 
   return (
     <Root>
       <WritePostOperationsWrapper>
-        <button onClick={() => handleCancelPost()}>
+        <Button
+          onClick={() => handleCancelPost()}
+          variant="contained"
+          className="actionButton"
+          sx={{
+            backgroundColor: "#5559af",
+            width: 105,
+            height: 59
+          }}
+        >
           <CancelText>Cancel</CancelText>
-        </button>
-        {postContent.length != 0 ? (
-          <SubmitButton onClick={() => handleSubmitPost()}>
-            <SubmitText>Submit</SubmitText>
-          </SubmitButton>
-        ) : (
-          <DisabledSubmitButton disabled={true}>
-            <SubmitText>Submit</SubmitText>
-          </DisabledSubmitButton>
-        )}
+        </Button>
+
+          <Button
+          onClick={() => handleSubmitPost()}
+          disabled={postContent.length == 0}
+          variant="contained"
+          className="actionButton"
+          sx={{
+            backgroundColor: "#5559af",
+            width: 105,
+            height: 59
+          }}
+        >
+          <SubmitText>Submit</SubmitText>
+        </Button>
       </WritePostOperationsWrapper>
       <PostTextInput
         value={postContent}
-        onChange={setPostContent}
-        placeholder="..."></PostTextInput>
+        setValue={setPostContent}
+        label="Post Content"
+        width="50vw"
+        height="100px"
+        padding="6px"
+        type="input"
+      />
     </Root>
   );
 };

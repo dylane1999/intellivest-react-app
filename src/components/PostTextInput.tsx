@@ -1,29 +1,55 @@
-import React, {useState, Dispatch, SetStateAction} from 'react';
-import styled from 'styled-components';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import {
+  createTheme,
+  ThemeProvider,
+  withStyles,
+} from "@material-ui/core/styles";
+import { textTheme } from "../themes";
 
-interface IPostTextInputProps {
-  onChange: Dispatch<SetStateAction<string>>;
-  value: string;
-  placeholder: string;
-  secure?: boolean;
+const styles = {
+  input: {
+    color: "#FFFFFF",
+  },
+};
+
+interface ITextInput {
+  classes: any;
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
+  label: string
+  padding: string
+  width: string
+  height: string
+  hasError?: boolean
+  type:string
+
 }
 
+const PostTextInput = (props: ITextInput) => {
+  const { classes } = props;
 
-const StyledInput = styled.input`
-  min-width: 100%;
-  height: 60%;
-  border-radius: 5px;
-  color: white;
-  padding: 26px;
-  line-height: 18px;
-`;
-
-const PostTextInput = (props: IPostTextInputProps) => {
   return (
-    <div>
-      FIX
-    </div>
+    <ThemeProvider theme={textTheme}>
+      <TextField
+        multiline={true}
+        id="outlined-basic"
+        variant="outlined"
+        required
+        label={props.label}
+        color="primary"
+        value={props.value}
+        type={props.type}
+        onChange={(event) => props.setValue(event.target.value)}
+        InputProps={{
+          className: classes.input,
+        }}
+        error={props.hasError}
+        style={{ width: `${props.width}`, height: `${props.height}`, padding: `${props.padding}`  }}
+      />
+    </ThemeProvider>
   );
 };
 
-export default PostTextInput;
+export default withStyles(styles)(PostTextInput);

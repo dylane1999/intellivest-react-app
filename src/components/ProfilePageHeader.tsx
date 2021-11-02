@@ -21,7 +21,7 @@ const HeaderRoot = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 80%;
   padding: 16px;
 `;
 
