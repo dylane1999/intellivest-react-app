@@ -5,7 +5,7 @@ import styled from "styled-components";
 interface IAvatarProps {
   imageUrl: string;
   size?: string;
-  userId: string;
+  userId: string | null;
 }
 
 const Avatar = (props: IAvatarProps) => {

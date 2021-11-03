@@ -10,10 +10,10 @@ import Avatar from './Avatar';
  */
 interface IProfilePageHeader {
   profilePictureLink: string | null;
-  firstname: string;
-  lastname: string;
-  username: string;
-  userId: string;
+  firstname: string | null;
+  lastname: string | null;
+  username: string | null;
+  userId: string | null;
 }
 
 const HeaderRoot = styled.div`

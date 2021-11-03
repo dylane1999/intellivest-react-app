@@ -13,7 +13,7 @@ const logInUser = createAsyncThunk(
       );
 
       const createUserAction: loginUserAction = {
-        id: response.data.id,
+        id: response.data.firstName,
         firstName: response.data.firstName,
         lastName: response.data.lastName,
         email: response.data.email,

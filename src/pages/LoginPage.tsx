@@ -13,6 +13,7 @@ import userSlice, { loginUserAction } from "../reducers/userSlice";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import getUserIdFromToken from "../hooks/getUserIdFromToken";
+import getUserById from "../api/getUserById";
 
 const Root = styled.div`
   background-color: #323232;
@@ -119,25 +120,6 @@ const loginUser = async (userLogin: string, userPassword: string) => {
   store.dispatch(loadingSlice.actions.setLoading(false));
 };
 
-const getUserById = async (token: string) => {
-  const decoded = getUserIdFromToken(token);
-  const response = await axios.get(
-    `https://api.intellivest-services.com/user?userId=${decoded?.uid}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const user: loginUserAction = {
-    id: response.data.id,
-    firstName: response.data.id,
-    lastName: response.data.lastName,
-    email: response.data.email,
-  };
-
-  return user;
-};
 
 const LoginPage = () => {
   const [emailLogin, changeEmail] = useState("");

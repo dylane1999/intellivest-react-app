@@ -3,11 +3,17 @@ import styled from "styled-components";
 import loginUserWithCredentials from "../actions/getAuthTokenFromCredentials";
 import GoBackArrow from "../components/GoBackArrow";
 import TextInput from "../components/TextInput";
-import {store} from "../store";
+import { store } from "../store";
 import TextField from "@mui/material/TextField";
 import { Button, withStyles } from "@mui/material";
 import TestComponent from "../components/TextInput";
 import "../index.css";
+import axios from "axios";
+import loadingSlice from "../reducers/loadingSlice";
+import getAuthTokenFromCredentials from "../actions/getAuthTokenFromCredentials";
+import userSlice from "../reducers/userSlice";
+import authSlice from "../reducers/authSlice";
+import getUserById from "../api/getUserById";
 
 const Root = styled.div`
   background-color: #323232;
@@ -108,15 +114,55 @@ const StyledTextField = styled(TextField)`
 `;
 
 const SignupPage = () => {
-  
-  const loginUser = async (userLogin: string, userPassword: string) => {
-    console.log("call login user");
-  //  const resData = await store.dispatch(
-   //   loginUserWithCredentials({ login: userLogin, password: userPassword })
- //  );
-  //  console.log(resData);
+  interface IUser {
+    id: "00u2hee8oizHPciZV5d7";
+    firstName: "first_name";
+    lastName: "last_name";
+    email: "fdfdfdfdfdff-e926-4c50-bca8-6a3123d4b463@gmail.com";
+  }
+
+  const signUpUser = async (
+    userLogin: string,
+    userPassword: string,
+    firstName: string,
+    lastName: string
+  ) => {
+    try {
+      console.log("call create user");
+      const response = await axios.put(
+        "https://api.intellivest-services.com/user",
+        {
+          email: userLogin,
+          firstName: firstName,
+          lastName: lastName,
+          password: userPassword,
+        }
+      );
+
+      const newUser: IUser = response.data;
+
+      const loginForm = new FormData();
+      loginForm.append("username", userLogin);
+      loginForm.append("password", userPassword);
+
+      console.log("call login user");
+      store.dispatch(loadingSlice.actions.setLoading(true));
+      const tokenRes = await store.dispatch(
+        getAuthTokenFromCredentials(loginForm)
+      );
+
+      const token: string = tokenRes.payload as string;
+      const user = await getUserById(token);
+      store.dispatch(userSlice.actions.loginUser(user));
+      store.dispatch(authSlice.actions.addToken(token));
+      store.dispatch(loadingSlice.actions.setLoading(false));
+    } catch (error) {
+      alert("failed to create a new user");
+    }
   };
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [emailLogin, changeEmail] = useState("");
   const [password, changePassword] = useState("");
 
@@ -151,25 +197,23 @@ const SignupPage = () => {
         />
 
         <TextInput
-          value={emailLogin}
-          setValue={changeEmail}
+          value={firstName}
+          setValue={setFirstName}
           label="First Name"
           width="320px"
           height="100px"
           padding="6px"
           type="input"
-
         />
 
         <TextInput
-          value={emailLogin}
-          setValue={changeEmail}
+          value={lastName}
+          setValue={setLastName}
           label="Last Name"
           width="320px"
           height="100px"
           padding="6px"
           type="input"
-
         />
 
         <TextInput
@@ -180,11 +224,10 @@ const SignupPage = () => {
           height="100px"
           padding="6px"
           type="password"
-
         />
 
         <Button
-          onClick={() => loginUser(emailLogin, password)}
+          onClick={() => signUpUser(emailLogin, password, firstName, lastName)}
           variant="contained"
           className="actionButton"
           sx={{
@@ -193,8 +236,6 @@ const SignupPage = () => {
         >
           Log In
         </Button>
-
-        
       </Card>
     </Root>
   );

@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import postSlice from '../reducers/postSlice';
+import { store } from '../store';
 
 const Root = styled.div`
   background-color: #323232;
@@ -12,6 +14,8 @@ const Root = styled.div`
 `;
 
 const PortfolioPage = () => {
+    store.dispatch(postSlice.actions.setIsWritingPost(false));
+
     return (
         <Root>
             WIP
