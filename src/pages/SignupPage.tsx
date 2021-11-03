@@ -11,7 +11,7 @@ import "../index.css";
 import axios from "axios";
 import loadingSlice from "../reducers/loadingSlice";
 import getAuthTokenFromCredentials from "../actions/getAuthTokenFromCredentials";
-import userSlice from "../reducers/userSlice";
+import userSlice, { loginUserAction } from "../reducers/userSlice";
 import authSlice from "../reducers/authSlice";
 import getUserById from "../api/getUserById";
 
@@ -153,7 +153,8 @@ const SignupPage = () => {
 
       const token: string = tokenRes.payload as string;
       const user = await getUserById(token);
-      store.dispatch(userSlice.actions.loginUser(user));
+      const userx = user as unknown as loginUserAction
+      store.dispatch(userSlice.actions.loginUser(userx));
       store.dispatch(authSlice.actions.addToken(token));
       store.dispatch(loadingSlice.actions.setLoading(false));
     } catch (error) {

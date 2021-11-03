@@ -17,6 +17,7 @@ const logoutUser = createAsyncThunk(
       let err: Error = error as Error;
       console.log(error, "unable to logout user");
       alert(`unable to logout ${err.message}`);
+      thunkAPI.dispatch(loadingSlice.actions.setLoading(false));
     }
   }
 );

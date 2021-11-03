@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import authSlice from '../reducers/authSlice';
+import loadingSlice from '../reducers/loadingSlice';
 import userSlice, {loginUserAction} from '../reducers/userSlice';
 
 export interface IUserInfo {
@@ -57,6 +58,7 @@ const SignUpNewUser = createAsyncThunk(
       return authTokenResponse.data;
 
     } catch (error) {
+      thunkAPI.dispatch(loadingSlice.actions.setLoading(false));
       console.log(error, 'unable to Signup user');
       alert("fail")
     }

@@ -115,7 +115,8 @@ const loginUser = async (userLogin: string, userPassword: string) => {
 
   const token: string = response.payload as string;
   const user = await getUserById(token);
-  store.dispatch(userSlice.actions.loginUser(user));
+  const userx = user as unknown as loginUserAction 
+  store.dispatch(userSlice.actions.loginUser(userx));
   store.dispatch(authSlice.actions.addToken(token));
   store.dispatch(loadingSlice.actions.setLoading(false));
 };

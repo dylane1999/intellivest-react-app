@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import authSlice from "../reducers/authSlice";
+import loadingSlice from "../reducers/loadingSlice";
 import userSlice, { loginUserAction } from "../reducers/userSlice";
 
 
@@ -33,6 +34,8 @@ const logInUser = createAsyncThunk(
       let err: Error = error as Error;
       console.log(error, "unable to login user");
       alert(`unable to login ${err.message}`);
+      thunkAPI.dispatch(loadingSlice.actions.setLoading(false));
+
     }
   }
 );
